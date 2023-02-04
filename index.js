@@ -12,10 +12,6 @@ const client = new Client({
     }
 });
 
-const browser = await puppeteer.launch({
-    executablePath: '/usr/bin/chromium-browser'
-  })
-
 let qrCodeImage = null;
 
 app.get('/', (req, res) => {
