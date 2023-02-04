@@ -6,7 +6,15 @@ const { Client, MessageMedia } = require('whatsapp-web.js');
 const qrcode = require('qrcode');
 const { Server } = require('socket.io')
 const io = new Server(server);
-const client = new Client();
+const client = new Client({
+    puppeteer: {
+        browserURL: '/usr/bin/chromium-browser'
+    }
+});
+
+const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser'
+  })
 
 let qrCodeImage = null;
 
