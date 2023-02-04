@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     });
     io.emit('qr', qrCodeImage);
     io.emit('message', 'QR Code received, scan please!');
-    console.log('a user connected');
+    console.log('user socket connected');
 });
 client.on('ready', () => {
     io.emit('authenticated', 'Whatsapp logged successfully');
