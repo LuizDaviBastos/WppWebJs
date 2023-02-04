@@ -30,7 +30,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
     res.send(client.info);
 })
 
