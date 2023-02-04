@@ -7,9 +7,9 @@ const qrcode = require('qrcode');
 const { Server } = require('socket.io')
 const io = new Server(server);
 const client = new Client({
-    puppeteer: {
-        browserURL: '/usr/bin/chromium-browser'
-    }
+	puppeteer: {
+		args: ['--no-sandbox'],
+	}
 });
 
 let qrCodeImage = null;
