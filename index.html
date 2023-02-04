@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Socket.IO chat</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>StickerBot WhatsappAPI</h1>
+        <div id="login">
+            <h3>Scan your phone number</h3>
+            <img src="" alt="QR Code" id="qrcode">
+        </div>
+        <div id="info">
+            <h3 id="phoneNumber">Logged with number: </h3>
+            <h3 id="plataform">Plataform: </h3>
+        </div>
+        <h3>Logs:</h3>
+        <ul class="logs"></ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var socket = io();
+            auth();
+            function auth() {
+                $.ajax({
+                    method: 'GET',
+                    url: '/info',
+                    success: (data) => {
+                        debugger;
+                        if (data) {
+                            $('#login').hide();
+                            $('#info').show();
+                            let plataform = data.platform;
+                            let phoneNumber = data.me.user;
+                            $('#phoneNumber').html(`Logged with number: ${phoneNumber}`);
+                            $('#plataform').html(`plataform: ${plataform}`);
+                        }
+                        else {
+                            $('#login').show();
+                            $('#info').hide();
+                        }
+                    }
+                })
+            }
+
+            socket.on('message', function (msg) {
+                $('.logs').prepend($('<li>').text(msg));
+            });
+
+            socket.on('qr', function (src) {
+                $('#qrcode').attr('src', src);
+                
+            });
+
+            socket.on('authenticated', function (data) {
+                auth();
+            });
+        });
+
+    </script>
+</body>
+
+</html>
