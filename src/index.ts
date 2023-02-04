@@ -18,8 +18,6 @@ const client = new Client({
 let qrCodeImage: string | null = null;
 
 app.get('/', (req, res) => {
-    //res.sendFile(__dirname + '/index.html');
-
     fs.readFile('src/index.html', 'utf-8', (err, data) => {
         if (err) {
           return res.status(500).send('Erro ao ler arquivo');
