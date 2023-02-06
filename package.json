@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc & node dist/index.js"
+    "start": "npx tsc & node dist/index.js",
+    "build": "npx tsc",
+    "pm2-start": "pm2 start dist/index.js"
   },
   "author": "",
   "license": "ISC",
