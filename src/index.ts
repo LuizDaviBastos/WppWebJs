@@ -81,20 +81,32 @@ client.initialize();
 const generateSticker = async (msg: Message) => {
     try {
         if (msg.type == MessageTypes.VIDEO || msg.type == MessageTypes.IMAGE) {
-            let messageMedia: MessageMedia = await msg.downloadMedia();
-            if (msg.isGif) {
+            let messageMedia: MessageMedia | undefined = await msg.downloadMedia();
+            debugger;
+            if (msg.isGif && !messageMedia) {
+                //msg.body = msg.from;
+                //msg.forward(msg.to);
                 const gifBase64 = (<any>msg)._data?.body;
                 messageMedia = new MessageMedia("image/gif", gifBase64, "image.gif");
             }
-            if(!messageMedia) {
+           /*  else if(msg.isGif && messageMedia && msg.body){
+                msg.forward(msg.body);
+            } */
+            else if(!messageMedia) {
+                //return;
                 msg.reply("❌ Error to process media");
             }
             else {
-                msg.reply(messageMedia, undefined, { sendMediaAsSticker: true });
+                /* if(msg.from.includes('21996829157')) {
+                    msg.reply(messageMedia, undefined, { sendMediaAsSticker: true });    
+                } */
+                //return;
+                msg.reply(messageMedia!, undefined, { sendMediaAsSticker: true });
             }
         }
 
     } catch (e) {
+        //return;
         msg.reply("❌ Error to process media");
     }
 }
