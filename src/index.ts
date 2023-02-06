@@ -80,7 +80,7 @@ client.initialize();
 
 const generateSticker = async (msg: Message) => {
     try {
-        if (msg.type !== MessageTypes.TEXT) {
+        if (msg.type == MessageTypes.VIDEO || msg.type == MessageTypes.IMAGE) {
             let messageMedia: MessageMedia = await msg.downloadMedia();
             if (msg.isGif) {
                 const gifBase64 = (<any>msg)._data?.body;
