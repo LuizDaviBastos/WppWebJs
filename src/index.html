@@ -33,10 +33,10 @@
                         if (data) {
                             $('#login').hide();
                             $('#info').show();
-                            let plataform = data.platform;
-                            let phoneNumber = data.me.user;
-                            $('#phoneNumber').html(`Logged with number: ${phoneNumber}`);
-                            $('#plataform').html(`plataform: ${plataform}`);
+                            let plataform = data?.platform;
+                            let phoneNumber = data?.me?.user;
+                            $('#phoneNumber').html(`Logged with number: ${phoneNumber || 'not found'}`);
+                            $('#plataform').html(`plataform: ${plataform || 'not found'}`);
                         }
                         else {
                             $('#login').show();
