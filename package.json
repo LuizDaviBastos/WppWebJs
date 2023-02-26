@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx tsc & node dist/index.js",
     "build": "npx tsc",
-    "pm2-start": "pm2 start dist/index.js -n StickerBot -f"
+    "pm2-start": "pm2 start dist/index.js -n StickerBot -f",
+    "pm2-delete": "pm2 delete StickerBot"
   },
   "author": "",
   "license": "ISC",
