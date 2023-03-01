@@ -72,8 +72,14 @@ client.on('ready', () => {
     console.log('Client is ready!');
 });
 
-client.on('message', msg => {
-    generateSticker(msg);
+client.on('message', async msg => {
+    try {
+        await generateSticker(msg);
+    }
+    catch(ex) {
+        io.emit('message', JSON.stringify(ex))
+    }
+    
 });
 
 client.initialize();
@@ -84,51 +90,18 @@ const generateSticker = async (msg: Message) => {
             let messageMedia: MessageMedia | undefined = await msg.downloadMedia();
             debugger;
             if (msg.isGif && !messageMedia) {
-                //msg.body = msg.from;
-                //msg.forward(msg.to);
                 const gifBase64 = (<any>msg)._data?.body;
                 messageMedia = new MessageMedia("image/gif", gifBase64, "image.gif");
             }
-           /*  else if(msg.isGif && messageMedia && msg.body){
-                msg.forward(msg.body);
-            } */
             else if(!messageMedia) {
-                //return;
-                msg.reply("❌ Error to process media");
+                await msg.reply("❌ Error to process media");
             }
             else {
-                /* if(msg.from.includes('21996829157')) {
-                    msg.reply(messageMedia, undefined, { sendMediaAsSticker: true });    
-                } */
-                //return;
-                msg.reply(messageMedia!, undefined, { sendMediaAsSticker: true });
+                await msg.reply(messageMedia!, undefined, { sendMediaAsSticker: true });
             }
         }
 
     } catch (e) {
-        //return;
-        msg.reply("❌ Error to process media");
+        await msg.reply("❌ Error to process media");
     }
 }
-/* 
-async function convertGifToMp4(inputBase64: string, onFinished?: (video: string) => void) {
-    const input = `input-${Date.now().toString()}.gif`;
-    const output = `output-${Date.now().toString()}.mp4`;
-    await fs.writeFileSync(input, Buffer.from(inputBase64, "base64"));
-
-    ffmpeg
-        .input(input)
-        .noAudio()
-        .output(output)
-        .on("end", async () => {
-            fs.unlinkSync(input);
-            debugger;
-            let video = (await fs.readFileSync(output)).toString("base64");
-            fs.unlinkSync(output);
-            if (onFinished) onFinished(video);
-            console.log("Finished");
-        })
-        .on("error", (e) => console.log(e))
-        .run();
-} */
-
